@@ -18,6 +18,7 @@ class TextWrapTest extends TestCase {
   public function setUp() {
     $this->resolucao = new Resolucao();
     $this->baseString = "Se vi mais longe foi por estar de pé sobre ombros de gigantes";
+    $this->spacedString = "   Se   vi   mais   longe   foi   por estar   de   pé   sobre   ombros   de   gigantes  ";
   }
 
   /**
@@ -92,6 +93,22 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("de", $ret[14]);
     $this->assertEquals("giga", $ret[15]);
     $this->assertEquals("ntes", $ret[16]);  
-  }    
+  }
+
+  /**
+   * Testa a quebra de linha para uma string espaçamento a mais no inicio, no fim e entre as palavras.
+   *
+   * @covers Galoa\ExerciciosPhp\TextWrap\Resolucao::textWrap
+   */
+  public function testSpacedString() {
+    $ret = $this->resolucao->textWrap($this->spacedString, 12);
+    $this->assertCount(6, $ret);
+    $this->assertEquals("Se vi mais", $ret[0]);
+    $this->assertEquals("longe foi", $ret[1]);
+    $this->assertEquals("por estar de", $ret[2]);
+    $this->assertEquals("pé sobre", $ret[3]);
+    $this->assertEquals("ombros de", $ret[4]);
+    $this->assertEquals("gigantes", $ret[5]);
+  }     
 
 }
