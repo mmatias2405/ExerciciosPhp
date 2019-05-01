@@ -21,9 +21,14 @@ class Resolucao implements TextWrapInterface {
             while(!$breakLine){
                 if($text[$i] != " "){
                     $ws = $this->wordSize($text, $i);
+                    if($aux!="")
+                        $ws++;
                     if($ws<=$lineSize){
-                        if($aux != "")
+                        if($aux!=""){
                             $aux.=" ";
+                            $lineSize--;
+                            $ws--;
+                        }
                         $aux.=$this->slice($text, $i, $i+$ws-1);
                         $i+=$ws;
                         $lineSize-=$ws;
@@ -34,14 +39,13 @@ class Resolucao implements TextWrapInterface {
                         $breakLine = true;
                     }
                 }
-                else{
-                    $lineSize--;
+                else
                     $i++;
-                }
                 if($breakWord){
-                    array_push($ret, $aux);
+                    if($aux!= "")
+                        array_push($ret, $aux);
                     $aux = "";
-                    $aux.=$this->slice($text, $i, $i+$length+1);
+                    $aux.=$this->slice($text, $i, $i+$length-1);
                     $i+=$length;
                 }
                 if($lineSize <= 0)
