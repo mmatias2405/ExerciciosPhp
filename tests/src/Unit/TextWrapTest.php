@@ -97,6 +97,20 @@ class TextWrapTest extends TestCase {
   }
 
   /**
+   * Testa a quebra de linha para length grande.
+   *
+   * @covers Galoa\ExerciciosPhp\TextWrap\Resolucao::textWrap
+   */
+  public function testForBigLength() {
+    $ret = $this->resolucao->textWrap($this->baseString, 20);
+    $this->assertCount(4, $ret);
+    $this->assertEquals("Se vi mais longe foi", $ret[0]);
+    $this->assertEquals("por estar de pé", $ret[1]);
+    $this->assertEquals("sobre ombros de", $ret[2]);
+    $this->assertEquals("gigantes", $ret[3]);
+  }      
+    
+  /**
    * Testa a quebra de linha para uma string espaçamento a mais no inicio, no fim e entre as palavras.
    *
    * @covers Galoa\ExerciciosPhp\TextWrap\Resolucao::textWrap
@@ -153,5 +167,4 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("ousad", $ret[13]);
     $this->assertEquals("o", $ret[14]);
   }      
-
 }
