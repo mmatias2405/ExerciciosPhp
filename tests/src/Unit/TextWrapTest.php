@@ -67,4 +67,31 @@ class TextWrapTest extends TestCase {
     $this->assertEquals("gigantes", $ret[5]);
   }
 
+  /**
+   * Testa a quebra de palavras quando o length é pequeno.
+   *
+   * @covers Galoa\ExerciciosPhp\TextWrap\Resolucao::textWrap
+   */
+  public function testForSmallLength() {
+    $ret = $this->resolucao->textWrap($this->baseString, 4);
+    $this->assertCount(17, $ret);
+    $this->assertEquals("Se", $ret[0]);
+    $this->assertEquals("vi", $ret[1]);
+    $this->assertEquals("mais", $ret[2]);
+    $this->assertEquals("long", $ret[3]);
+    $this->assertEquals("e", $ret[4]);
+    $this->assertEquals("foi", $ret[5]);
+    $this->assertEquals("por", $ret[6]);
+    $this->assertEquals("esta", $ret[7]);
+    $this->assertEquals("r de", $ret[8]);
+    $this->assertEquals("pé", $ret[9]);
+    $this->assertEquals("sobr", $ret[10]);
+    $this->assertEquals("e", $ret[11]);  
+    $this->assertEquals("ombr", $ret[12]);
+    $this->assertEquals("os", $ret[13]);
+    $this->assertEquals("de", $ret[14]);
+    $this->assertEquals("giga", $ret[15]);
+    $this->assertEquals("ntes", $ret[16]);  
+  }    
+
 }
