@@ -24,13 +24,9 @@ class Resolucao implements TextWrapInterface {
                     if($ws<=$lineSize){
                         if($aux != "")
                             $aux.=" ";
-                        $last = $i+$ws-1;
-                        $frst = $i;
-                        for($j = $frst;$j<=$last;$j++){
-                            $aux.=$text[$j];
-                            $i++;
-                            $lineSize--;
-                        }
+                        $aux.=$this->slice($text, $i, $i+$ws-1);
+                        $i+=$ws;
+                        $lineSize-=$ws;
                     }
                     else{
                         if($ws>$length)
@@ -45,12 +41,8 @@ class Resolucao implements TextWrapInterface {
                 if($breakWord){
                     array_push($ret, $aux);
                     $aux = "";
-                    $last = $i+$length-1;
-                    $frst = $i;
-                    for($j=$frst;$j<=$last;$j++){
-                         $aux.=$text[$j];
-                         $i++; 
-                     }
+                    $aux.=$this->slice($text, $i, $i+$length+1);
+                    $i+=$length;
                 }
                 if($lineSize <= 0)
                     $breakLine = true;
@@ -63,12 +55,24 @@ class Resolucao implements TextWrapInterface {
             return array("");
         return $ret;
     }
-    
+    /*
+        Essa função retorna o tamanho de uma palavra(do i até o próximo espaço " "), supondo que o i esteja indicando a primeira letra da palavra. 
+    */
     private function wordSize(string $text, int $frst) : int {
         for($i = $frst; $i < strlen($text); $i++){
             if($text[$i]==" ")
                 return $i-$frst;
         }
         return $i-$frst;
+    }
+    /*
+        Essa função retorna uma nova string que é uma fatia da string recebida como parametro, partindo de $text[$frst] até $text[$last];
+    */
+    private function slice(string $text, int $frst, int $last): string {
+        $ret = "";
+        for($i = $frst; $i<=$last; $i++){
+            $ret.=$text[$i];
+        }
+        return $ret;
     }
 }
