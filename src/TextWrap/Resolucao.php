@@ -6,7 +6,7 @@ namespace Galoa\ExerciciosPhp\TextWrap;
  * Implemente sua resolução aqui.
  */
 class Resolucao implements TextWrapInterface {
-
+    
 	/**
 	* {@inheritdoc}
 	*/
@@ -20,11 +20,7 @@ class Resolucao implements TextWrapInterface {
             $breakWord = false;
             while(!$breakLine){
                 if($text[$i] != " "){
-                    for($j=$i;$j<strlen($text);$j++){
-                        if($text[$j] == " ")
-                            break;
-                    }
-                    $ws = $j-$i;
+                    $ws = $this->wordSize($text, $i);
                     if($ws<=$lineSize){
                         if($aux != "")
                             $aux.=" ";
@@ -43,7 +39,6 @@ class Resolucao implements TextWrapInterface {
                     }
                 }
                 else{
-                    //$aux.= " ";
                     $lineSize--;
                     $i++;
                 }
@@ -67,5 +62,13 @@ class Resolucao implements TextWrapInterface {
         if(count($ret)==0)
             return array("");
         return $ret;
+    }
+    
+    private function wordSize(string $text, int $frst) : int {
+        for($i = $frst; $i < strlen($text); $i++){
+            if($text[$i]==" ")
+                return $i-$frst;
+        }
+        return $i-$frst;
     }
 }
